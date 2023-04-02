@@ -13,6 +13,7 @@ class Sector(BaseModel):
     parentSector: Optional[str] = None
     valuesPerYear: List[Value]
 
+
     @validator('country')
     def country_is_uppercase(cls, v):
         if v is not None:

@@ -1,9 +1,7 @@
 import csv
-import re
-from typing import List, Dict, Any
+from typing import List
 
-from models.emissions_model import Sector, Value
-
+from importer.models.emissions_model import Sector, Value
 
 def parse_csv_file(file_path: str) -> List[Sector]:
     with open(file_path, 'r') as file:
