@@ -18,3 +18,8 @@ async def ge_emissions(params: EmissionQueryParams = Depends()):
 
     cursor = list(client.find(filters).skip(params.skip).limit(params.limit).sort([sorting]))
     return cursor
+
+
+@app.get("/emissions/ping")
+async def ping():
+    return {"message": "pong"}

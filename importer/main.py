@@ -34,3 +34,8 @@ async def create_upload_file(file: UploadFile = File(...)):
 
     # Return a JSON response with the number of documents inserted
     return {"message": f"{len(result.inserted_ids)} documents inserted."}
+
+
+@app.get("/upload/ping")
+async def ping():
+    return {"message": "pong"}
