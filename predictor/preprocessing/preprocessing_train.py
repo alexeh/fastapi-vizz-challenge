@@ -2,13 +2,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder
 import pandas as pd
 import numpy as np
-from fastapi import FastAPI, UploadFile, File, HTTPException
 
 
 
-def preprocess_data(file: UploadFile = File(...)):
+def preprocess_data(filepath: str):
     # Read the CSV file
-    data = pd.read_csv('./data/emissions.csv')
+    data = pd.read_csv(filepath)
     # Drop unnecessary columns
     data = data.drop(columns=['Sector', 'Parent sector'])
 
@@ -33,7 +32,6 @@ def preprocess_data(file: UploadFile = File(...)):
     X_test_encoded = encoder.transform(X_test[['Country']])
 
     # Combine the encoded 'Country' column with the 'year' column
-
     X_train_final = np.hstack([X_train_encoded.toarray(), X_train['year'].values.reshape(-1, 1)])
     X_test_final = np.hstack([X_test_encoded.toarray(), X_test['year'].values.reshape(-1, 1)])
 
