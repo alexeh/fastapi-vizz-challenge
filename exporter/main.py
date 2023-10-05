@@ -6,13 +6,13 @@ from model.emissions_model import Sector
 from params.emissions_query_params import EmissionQueryParams, build_filters, apply_sorting
 import json
 
-asgi_app = FastAPI()
+app = FastAPI()
 
 
 client = get_mongo_client()
 
 
-@asgi_app.get("/emissions", response_model=List[Sector])
+@app.get("/emissions", response_model=List[Sector])
 async def ge_emissions(params: EmissionQueryParams = Depends()):
     filters = build_filters(params)
     sorting = apply_sorting(params)
@@ -21,9 +21,7 @@ async def ge_emissions(params: EmissionQueryParams = Depends()):
     return cursor
 
 
-@asgi_app.get("/emissions/ping")
+@app.get("/emissions/ping")
 async def ping():
     return {"message": "pong"}
 
-
-app = ASGIMiddleware(asgi_app)

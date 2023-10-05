@@ -7,10 +7,8 @@ from utils.csv_parser import parse_csv_file
 import os
 from pathlib import Path
 
-asgi_app = FastAPI()
-asgi_app.add_middleware(RequestValidatorMiddleware)
-
-app = ASGIMiddleware(asgi_app)
+app = FastAPI()
+app.add_middleware(RequestValidatorMiddleware)
 
 
 
@@ -21,7 +19,7 @@ temp_files_dir = Path(os.getcwd() + "/temp_files")
 temp_files_dir.mkdir(parents=True, exist_ok=True)
 
 
-@asgi_app.post("/upload", dependencies=[Depends(file_validator)])
+@app.post("/upload", dependencies=[Depends(file_validator)])
 async def create_upload_file(file: UploadFile = File(...)):
 
     # Save the uploaded file to disk in the temp_files directory
@@ -41,9 +39,8 @@ async def create_upload_file(file: UploadFile = File(...)):
     return {"message": f"{len(result.inserted_ids)} documents inserted."}
 
 
-@asgi_app.get("/upload/ping")
+@app.get("/upload/ping")
 async def ping():
     return {"message": "pong"}
 
 
-app = ASGIMiddleware(asgi_app)

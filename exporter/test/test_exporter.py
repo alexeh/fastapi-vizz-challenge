@@ -2,9 +2,9 @@ from fastapi.testclient import TestClient
 import pytest
 
 from exporter.db.database import get_mongo_client
-from exporter.main import asgi_app
+from exporter.main import app
 
-client = TestClient(asgi_app)
+client = TestClient(app)
 
 
 @pytest.fixture(scope="session", autouse=True)
