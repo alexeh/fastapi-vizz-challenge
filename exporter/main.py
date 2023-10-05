@@ -1,17 +1,18 @@
-from typing import List, Optional
-from pydantic import BaseModel, conint
-from fastapi import FastAPI, File, UploadFile, Depends, Query
+from typing import List
+from a2wsgi import ASGIMiddleware
+from fastapi import FastAPI, Depends
 from db.database import get_mongo_client
 from model.emissions_model import Sector
 from params.emissions_query_params import EmissionQueryParams, build_filters, apply_sorting
 import json
 
-app = FastAPI()
+asgi_app = FastAPI()
+
 
 client = get_mongo_client()
 
 
-@app.get("/emissions", response_model=List[Sector])
+@asgi_app.get("/emissions", response_model=List[Sector])
 async def ge_emissions(params: EmissionQueryParams = Depends()):
     filters = build_filters(params)
     sorting = apply_sorting(params)
@@ -20,6 +21,9 @@ async def ge_emissions(params: EmissionQueryParams = Depends()):
     return cursor
 
 
-@app.get("/emissions/ping")
+@asgi_app.get("/emissions/ping")
 async def ping():
     return {"message": "pong"}
+
+
+app = ASGIMiddleware(asgi_app)
