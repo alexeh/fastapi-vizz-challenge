@@ -22,7 +22,7 @@ class RequestValidatorMiddleware(BaseHTTPMiddleware):
         print('Hitting endpoint ***************')
         print(request.url.path)
         print('********************************')
-        return request.url.path == "/upload"
+        return request.url.path == "/upload/"
 
     def is_request_type_allowed(self, request: Request):
         return request.method == "POST"
