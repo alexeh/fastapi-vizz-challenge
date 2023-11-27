@@ -14,15 +14,13 @@ class RequestValidatorMiddleware(BaseHTTPMiddleware):
         if not self.is_endpoint_allowed(request):
             return JSONResponse(
                 status_code=404,
-                content={"detail": "Endpoint not allowed." + request.url.path},
+                content={"detail": "Endpoint not allowed."},
             )
         return await call_next(request)
 
     def is_endpoint_allowed(self, request: Request):
-        print('Hitting endpoint ***************')
-        print(request.url.path)
-        print('********************************')
-        return request.url.path == "/upload/"
+
+        return request.url.path == "/upload"
 
     def is_request_type_allowed(self, request: Request):
         return request.method == "POST"
