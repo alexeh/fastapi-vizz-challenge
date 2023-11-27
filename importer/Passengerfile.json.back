@@ -1,6 +1,6 @@
 {
   "command": "uvicorn main:app --port 3000 --reload",
-  "app_type": "generic"
+  "app_type": "wsgi"
 }
 
 
