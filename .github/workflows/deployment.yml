@@ -41,5 +41,5 @@ jobs:
 
      - name: Deploy
        run: |
-         ssh -i private_key ubuntu@${{ secrets.SERVER_IP }} "cd /home/ubuntu/fastapi-vizz-challenge && git pull && sudo systemctl restart fastapi-importer && sudo systemctl restart fastapi-exporter"
+         ssh -i private_key ubuntu@${{ secrets.SERVER_IP }} "cd /home/ubuntu/challenge/fastapi-vizz-challenge && git pull && sudo systemctl restart importer && sudo systemctl restart exporter"
        shell: bash

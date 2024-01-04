@@ -1,6 +1,0 @@
-{
-  "command": "uvicorn main:app --port 4000 --reload",
-  "app_type": "wsgi"
-}
-
-
