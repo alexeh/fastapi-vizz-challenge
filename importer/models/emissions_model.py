@@ -1,10 +1,11 @@
+from decimal import Decimal
 from typing import Optional, List
 from pydantic import BaseModel, conint, validator
 
 
 class Value(BaseModel):
     year: conint(ge=1800, le=9999)
-    value: float
+    value: Decimal
 
 
 class Sector(BaseModel):
