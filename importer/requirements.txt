@@ -19,3 +19,4 @@ python-multipart
 pytest
 httpx
 a2wsgi
+boto3
