@@ -1,5 +1,6 @@
+from typing import Optional
 from pydantic import BaseModel, Field
-from pydantic.class_validators import Optional
+#from pydantic.class_validators import Optional
 
 
 class EmissionQueryParams(BaseModel):
@@ -37,3 +38,5 @@ def apply_sorting(params: EmissionQueryParams):
     sort_by = params.sort_by if params.sort_by else "_id"
     sort_order_int = 1 if params.sort_order.lower() == "asc" else -1
     return sort_by, sort_order_int
+
+
