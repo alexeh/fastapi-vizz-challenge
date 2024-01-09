@@ -7,8 +7,6 @@ settings = get_settings()
 aws_access_key_id = settings.AWS_ACCESS_KEY
 aws_secret_access_key = settings.AWS_SECRET_KEY
 
-print('aws_access_key_id', aws_access_key_id)
-print('aws_secret_access_key', aws_secret_access_key)
 
 
 def get_mongo_client():
