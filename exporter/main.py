@@ -1,11 +1,6 @@
-from typing import List
-from a2wsgi import ASGIMiddleware
-from boto3.dynamodb.conditions import Key
 from fastapi import FastAPI, Depends
 from db.database import get_mongo_client, get_dynamodb_client
-from model.emissions_model import Sector
 from params.emissions_query_params import EmissionQueryParams, build_filters, apply_sorting
-import json
 
 app = FastAPI()
 

@@ -3,6 +3,8 @@ from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
+hash = "f311e4bf4a5ffb07838326b9791b9c2849cd9898"
+
 class Settings(BaseSettings):
     """App configuration"""
 

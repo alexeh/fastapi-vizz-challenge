@@ -1,5 +1,4 @@
 from fastapi import FastAPI, File, UploadFile, Depends
-from a2wsgi import ASGIMiddleware
 from db.database import get_mongo_client, get_dynamodb_client
 from middlewares.file_validator import file_validator
 from middlewares.request_validator import RequestValidatorMiddleware
