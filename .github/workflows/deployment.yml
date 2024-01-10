@@ -32,7 +32,12 @@ jobs:
 
      - name: Set up SSH
        run: |
-         mkdir -p ~/.ssh && chmod 700 ~/.ssh && echo "${{ secrets.GH_DEPLOYMENT_KEY }}" > private_key && chmod 600 private_key && echo "${{ secrets.SERVER_IP }} ecdsa-sha2-nistp256 $(ssh-keyscan ${{ secrets.SERVER_IP }} 2>/dev/null)" >> ~/.ssh/known_hosts && chmod 644 ~/.ssh/known_hosts
+         mkdir -p ~/.ssh
+         chmod 700 ~/.ssh
+         echo "${{ secrets.GH_DEPLOYMENT_KEY }}" > private_key
+         chmod 600 private_key
+         echo "${{ secrets.SERVER_IP }} ecdsa-sha2-nistp256 $(ssh-keyscan ${{ secrets.SERVER_IP }} 2>/dev/null)" >> ~/.ssh/known_hosts
+         chmod 644 ~/.ssh/known_hosts
 
      - name: Deploy
        run: |
