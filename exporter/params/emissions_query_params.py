@@ -1,6 +1,5 @@
 from typing import Optional
 from pydantic import BaseModel, Field
-#from pydantic.class_validators import Optional
 
 
 class EmissionQueryParams(BaseModel):

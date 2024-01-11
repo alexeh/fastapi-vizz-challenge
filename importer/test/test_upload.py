@@ -1,7 +1,7 @@
 import pytest
 from fastapi.testclient import TestClient
 from db.database import get_mongo_client
-from main import app
+from importer.main import app
 
 client = TestClient(app)
 
