@@ -24,7 +24,6 @@ def test_get_emissions():
 
 
 def test_get_emissions_country_filter():
-    print('NO PINTA NADA O QUE')
     response = client.get("/emissions?country=USA")
     assert response.status_code == 200
     results = response.json()
