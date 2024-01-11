@@ -7,6 +7,9 @@ on:
 
 jobs:
   testing-exporter:
+    env:
+      AWS_ACCESS_KEY_ID: FAKEKEY
+      AWS_SECRET_ACCESS_KEY: FAKEKEY
     name: Exporter Tests
     runs-on: ubuntu-latest
 
@@ -18,6 +21,7 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: root
           MONGO_INITDB_ROOT_PASSWORD: example
+
 
     steps:
       - uses: actions/checkout@v3
