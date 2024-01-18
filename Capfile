@@ -13,9 +13,20 @@ require "capistrano/deploy"
 # install_plugin Capistrano::SCM::Svn
 # or
 require "capistrano/scm/git"
-require 'dotenv'
-install_plugin Capistrano::SCM::Git
-Dotenv.load('.env')
+if ENV['SERVER_IP'].nil?
+  begin
+    require 'dotenv'
+    Dotenv.load('.env')
+  rescue LoadError
+    puts "Running deployment via GH Actions..."
+  end
+end
+
+# ... rest of your Capfile content ...
+
+# require 'dotenv'
+# install_plugin Capistrano::SCM::Git
+# Dotenv.load('.env')
 
 # Include tasks from other gems included in your Gemfile
 #

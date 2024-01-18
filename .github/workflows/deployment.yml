@@ -6,41 +6,31 @@ on:
       - main
 
 jobs:
-  wait_for_tests:
-    name: Wait for Tests
-    runs-on: ubuntu-20.04
-    steps:
-     - name: Wait for Importer Test to finish
-       uses: fountainhead/action-wait-for-check@v1.1.0
-       with:
-         token: ${{ secrets.GITHUB_TOKEN }}
-         checkName: Importer Tests
-         ref: ${{ github.event.pull_request.head.sha || github.sha }}
-
-     - name: Wait for Exporter Test to finish
-       uses: fountainhead/action-wait-for-check@v1.1.0
-       with:
-         token: ${{ secrets.GITHUB_TOKEN }}
-         checkName: Exporter Tests
-         ref: ${{ github.event.pull_request.head.sha || github.sha }}
   deploy:
-    name: Deploy to Server
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-     - name: Checkout repository
-       uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-     - name: Set up SSH
-       run: |
-         mkdir -p ~/.ssh
-         chmod 700 ~/.ssh
-         echo "${{ secrets.GH_DEPLOYMENT_KEY }}" > private_key
-         chmod 600 private_key
-         echo "${{ secrets.SERVER_IP }} ecdsa-sha2-nistp256 $(ssh-keyscan ${{ secrets.SERVER_IP }} 2>/dev/null)" >> ~/.ssh/known_hosts
-         chmod 644 ~/.ssh/known_hosts
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
 
-     - name: Deploy
-       run: |
-         ssh -i private_key ubuntu@${{ secrets.SERVER_IP }} "cd /home/ubuntu/challenge/fastapi-vizz-challenge &&
-         git pull &&  source /home/ubuntu/challenge/fastapi-vizz-challenge/importer/importer_env/bin/activate && pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/importer/requirements.txt && deactivate && source /home/ubuntu/challenge/fastapi-vizz-challenge/exporter/exporter_env/bin/activate && pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/exporter/requirements.txt && deactivate && sudo systemctl restart importer && sudo systemctl restart exporter "
-       shell: bash
+    - name: Install Capistrano
+      run: |
+        gem install capistrano
+
+    - name: Set up SSH Key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.GH_DEPLOYMENT_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+
+
+    - name: Deploy to EC2
+      env:
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        DEPLOYMENT_PATH: ${{ secrets.DEPLOYMENT_PATH }}
+      run: |
+        cap production deploy
