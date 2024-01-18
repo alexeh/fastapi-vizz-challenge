@@ -1,7 +1,7 @@
 import csv
 from typing import List
 from decimal import Decimal
-from importer.models.emissions_model import Sector
+from models.emissions_model import Sector
 
 
 def parse_csv_file(file_path: str) -> List[Sector]:
