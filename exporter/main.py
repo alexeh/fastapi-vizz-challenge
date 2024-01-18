@@ -27,7 +27,7 @@ async def ge_emissions(params: EmissionQueryParams = Depends()):
     return response.get('Items')
 
 
-@app.get("/emissions/ping")
+@app.get("/ping")
 async def ping():
     return {"message": "pong"}
 

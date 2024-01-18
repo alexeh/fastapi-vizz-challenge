@@ -73,4 +73,55 @@ namespace :deploy do
   end
 end
 
+namespace :deploy do
+  desc 'Exporter Health Check'
+  task :health_exporter do
+    on roles(:app) do
+      retry_count = 0
+      max_retries = 5
+      delay = 10
+
+      while retry_count < max_retries
+        if test "curl -s http://localhost:4000/ping | grep pong"
+          info 'Exporter is up!'
+          break
+        else
+          retry_count += 1
+          info "Waiting for Exporter to start (attempt #{retry_count})..."
+          sleep delay
+        end
+      end
+
+      if retry_count == max_retries
+        error 'Exporter did not start in time!'
+        exit 1
+      end
+    end
+  end
+
+  desc 'Importer Health Check'
+  task :health_importer do
+    on roles(:app) do
+      retry_count = 0
+      max_retries = 5
+      delay = 10
+
+      while retry_count < max_retries
+        if test "curl -s http://localhost:3000/ping | grep pong"
+          info 'Exporter Up!'
+          break
+        else
+          retry_count += 1
+          info "Waiting for Importer to start (attempt #{retry_count})..."
+          sleep delay
+        end
+      end
+
+      if retry_count == max_retries
+        error 'Importer down...!'
+        exit 1
+      end
+    end
+  end
+end
 

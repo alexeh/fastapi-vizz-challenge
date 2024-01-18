@@ -49,7 +49,7 @@ async def create_upload_file(file: UploadFile = File(...)):
     return {"message": f"{len(result)} documents inserted."}
 
 
-@app.get("/upload/ping")
+@app.get("/ping")
 async def ping():
     return {"message": "pong"}
 

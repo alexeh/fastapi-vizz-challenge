@@ -13,7 +13,7 @@ set :ssh_options, {
 after 'deploy:starting', 'exporter:deploy'
 after 'exporter:deploy', 'importer:deploy'
 after 'importer:deploy', 'deploy:restart_services'
-# after 'deploy:restart_services', 'deploy:health_exporter'
-# after 'deploy:health_exporter', 'deploy:health_importer'
+after 'deploy:restart_services', 'deploy:health_exporter'
+after 'deploy:health_exporter', 'deploy:health_importer'
 
 

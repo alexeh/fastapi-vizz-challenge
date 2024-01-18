@@ -6,6 +6,8 @@ import copy
 
 class RequestValidatorMiddleware(BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next):
+        if self.is_health_check(request):
+            return await call_next(request)
         if not self.is_request_type_allowed(request):
             return JSONResponse(
                 status_code=405,
@@ -23,4 +25,8 @@ class RequestValidatorMiddleware(BaseHTTPMiddleware):
         return request.url.path == "/upload"
 
     def is_request_type_allowed(self, request: Request):
+        print()
         return request.method == "POST"
+
+    def is_health_check(self, request: Request):
+        return request.url.path == "/ping"
