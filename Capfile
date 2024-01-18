@@ -13,7 +13,9 @@ require "capistrano/deploy"
 # install_plugin Capistrano::SCM::Svn
 # or
 require "capistrano/scm/git"
+require 'dotenv'
 install_plugin Capistrano::SCM::Git
+Dotenv.load('.env')
 
 # Include tasks from other gems included in your Gemfile
 #
