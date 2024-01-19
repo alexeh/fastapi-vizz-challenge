@@ -44,8 +44,8 @@ namespace :exporter do
     task :deploy do
         on roles(:app) do
         within '/home/ubuntu/challenge/fastapi-vizz-challenge/exporter' do
-            execute 'source /home/ubuntu/challenge/fastapi-vizz-challenge/exporter/exporter_env/bin/activate'
-            execute '/home/ubuntu/challenge/fastapi-vizz-challenge/exporter/exporter_env/bin/pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/exporter/requirements.txt'
+            execute 'source /home/ubuntu/challenge/exporter_env/bin/activate'
+            execute '/home/ubuntu/challenge/exporter_env/bin/pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/current/exporter/requirements.txt'
         end
         end
     end
@@ -56,8 +56,8 @@ namespace :importer do
     task :deploy do
         on roles(:app) do
         within '/home/ubuntu/challenge/fastapi-vizz-challenge/importer' do
-            execute 'source /home/ubuntu/challenge/fastapi-vizz-challenge/importer/importer_env/bin/activate'
-            execute '/home/ubuntu/challenge/fastapi-vizz-challenge/importer/importer_env/bin/pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/importer/requirements.txt'
+            execute 'source /home/ubuntu/challenge/importer_env/bin/activate'
+            execute '/home/ubuntu/challenge/importer_env/bin/pip install -r /home/ubuntu/challenge/fastapi-vizz-challenge/current/importer/requirements.txt'
         end
         end
     end
@@ -83,7 +83,7 @@ namespace :deploy do
 
       while retry_count < max_retries
         if test "curl -s http://localhost:4000/ping | grep pong"
-          info 'Exporter is up!'
+          info 'Exporter is Up!'
           break
         else
           retry_count += 1
@@ -108,7 +108,7 @@ namespace :deploy do
 
       while retry_count < max_retries
         if test "curl -s http://localhost:3000/ping | grep pong"
-          info 'Exporter Up!'
+          info 'Importer is Up!'
           break
         else
           retry_count += 1
